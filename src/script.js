@@ -48,6 +48,16 @@ roof.position.y = 3
 roof.rotation.y = Math.PI / 4
 house.add(roof)
 
+// Door
+const door = new THREE.Mesh(
+    new THREE.PlaneGeometry(2, 2),
+    new THREE.MeshStandardMaterial({color: '#aa7b7b'})
+)
+door.position.y = 1
+door.position.z = 2 + 0.01
+
+house.add(door)
+
 // Temporary sphere
 const sphere = new THREE.Mesh(
     new THREE.SphereGeometry(1, 32, 32),
