@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'lil-gui'
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 
 THREE.ColorManagement.enabled = false
 
@@ -61,6 +63,8 @@ grassColorTexture.wrapT = THREE.RepeatWrapping
 grassAmbientOcclusionTexture.wrapT = THREE.RepeatWrapping
 grassNormalTexture.wrapT = THREE.RepeatWrapping
 grassRoughnessTexture.wrapT = THREE.RepeatWrapping
+
+const textTexture = textureLoader.load('./textures/matcaps/5.png')
 
 /**
  * House
@@ -206,6 +210,31 @@ scene.add(ghost2)
 
 const ghost3 = new THREE.PointLight('#ff00ff', 2, 3)
 scene.add(ghost3)
+
+// Font Loader
+const fontLoader = new FontLoader()
+fontLoader.load('./fonts/helvetiker_regular.typeface.json', (font)=>{
+    const textGeometry = new TextGeometry('Created by Octavian Sulic', {
+        font,
+        size: 0.1,
+        height: 0.05,
+        curveSegments: 10,
+        bevelEnabled: true,
+        bevelThickness: 0.03,
+        bevelSize: 0.02,
+        bevelOffset: 0,
+        bevelSegments: 10,
+    })
+
+    textGeometry.center()
+
+    const textMaterial = new THREE.MeshMatcapMaterial({matcap: textTexture})
+    const text = new THREE.Mesh(textGeometry, textMaterial)
+    text.position.z = 2
+    text.position.y = 2.2
+
+    // scene.add(text)
+})
 
 /**
  * Sizes
